@@ -1,5 +1,7 @@
 package Vehicle;
 
+import java.util.Date;
+
 public class Menu {
 
 	private static final int SALE_CAR = 1, SALE_TRUCK = 2, PURCHASE = 3, EXIT = 4 ;
