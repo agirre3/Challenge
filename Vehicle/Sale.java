@@ -18,6 +18,9 @@ public class Sale {
 				System.out.print("Car´s colour: ");
 				String colour = Console.readString();
 				System.out.println();
+				System.out.print("Number plate: ");
+				String matricula = Console.readString();
+				System.out.println();
 				System.out.print("Seats number: ");
 				int numAsientos = Console.readInt();
 				System.out.println();
@@ -31,7 +34,7 @@ public class Sale {
 				String model = Console.readString();
 				System.out.println();
 				System.out.print("Year: ");
-				int year = Console.readInt();
+				String year = Console.readString();
 				Serie serie = new Serie(brand, model, year);
 				System.out.println();
 				System.out.print("Doors: ");
@@ -39,7 +42,7 @@ public class Sale {
 				System.out.println();
 				System.out.print("Porter capacity: ");
 				int capacidadMaletero = Console.readInt();
-				Car c = new Car(numBastidor, colour, numAsientos, precio, serie, numPuertas, capacidadMaletero);
+				Car c = new Car(numBastidor, colour, matricula, numAsientos, precio, serie, numPuertas, capacidadMaletero);
 				if (existsCar(c)) {
 					sellCar(c);						
 				}
@@ -63,6 +66,9 @@ public class Sale {
 				System.out.print("Truck´s colour: ");
 				String colour = Console.readString();
 				System.out.println();
+				System.out.print("Number plate: ");
+				String matricula = Console.readString();
+				System.out.println();
 				System.out.print("Seats number: ");
 				int numAsientos = Console.readInt();
 				System.out.println();
@@ -76,7 +82,7 @@ public class Sale {
 				String model = Console.readString();
 				System.out.println();
 				System.out.print("Year: ");
-				int year = Console.readInt();
+				String year = Console.readString();
 				Serie serie = new Serie(brand, model, year);
 				System.out.println();
 				System.out.print("Load: ");
@@ -84,7 +90,7 @@ public class Sale {
 				System.out.println();
 				System.out.print("Merchandise type: ");
 				char tipoMercancia = Console.readChar();
-				Truck t = new Truck(numBastidor, colour, numAsientos, precio, serie, carga, tipoMercancia);
+				Truck t = new Truck(numBastidor, colour, matricula, numAsientos, precio, serie, carga, tipoMercancia);
 				if (existsTruck(t)) {
 					sellTruck(t);						
 				}

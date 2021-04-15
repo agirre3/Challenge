@@ -21,7 +21,7 @@ public class Menu {
 				new Sale().buyTruck();		
 			}
 			else if (option == PURCHASE) {
-				new Purchase.sellVehicle();
+				new Purchase().sell();
 			}
 			else {
 				System.out.println("Bye.");

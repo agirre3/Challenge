@@ -1,5 +1,8 @@
 package Vehicle;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -15,6 +18,9 @@ public class Test {
 		Truck t3 = new Truck(112237, "Blue", 3, 50000, s2, 10000, 'G');*/
 		
 		m.menu();
+		 
+		/*Calendar fecha = Calendar.getInstance();
+		System.out.println(fecha.getTime());*/
 		
 	}
 

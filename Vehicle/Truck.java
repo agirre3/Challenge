@@ -8,11 +8,11 @@ public class Truck extends Vehicle{
 	private char tipoMercancia;
 	private HashMap<String, Vehicle> serieListTruck = new HashMap<String, Vehicle>();
 	
-	public Truck(int numBastidor, String colour, int numAsientos, int precio, Serie serie, int carga, char tipoMercacia) {
-		super(numBastidor, colour, numAsientos, precio, serie);
+	public Truck(int numBastidor, String colour, String matricula, int numAsientos, int precio, Serie serie, int carga, char tipoMercacia) {
+		super(numBastidor, colour, matricula, numAsientos, precio, serie);
 		this.carga = carga;
 		this.tipoMercancia = tipoMercacia;
-		Truck t = new Truck(numBastidor, colour, numAsientos, precio, serie, carga, tipoMercancia);
+		Truck t = new Truck(numBastidor, colour, matricula, numAsientos, precio, serie, carga, tipoMercancia);
 	}
 
 	public int getCarga() {
