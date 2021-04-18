@@ -1,12 +1,12 @@
 package G4Challenge;
 
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class Serie {
 
 	private String marca, modelo, anio_fabricacion;
 	//private static int idSerie = 0;
-	private HashMap<Integer, String[]> serie = new HashMap<Integer, String[]>();
+	//private HashMap<Integer, String[]> serie = new HashMap<Integer, String[]>();
 	String[] serieType = new String[3];
 	
 	public Serie(String marca, String modelo, String anio_fabricacion) {

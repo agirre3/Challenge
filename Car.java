@@ -9,8 +9,6 @@ public class Car extends Vehicle{
 	private int capacidadMaletero;
 	//private HashMap<String, Vehicle> serieListCar = new HashMap<String, Vehicle>();
 
-	
-
 	public Car(String numBastidor, String matricula, String colour,int numAsientos, int precio, int serie, int numPuertas, int capacidadMaletero) {
 		super(numBastidor, colour, matricula, numAsientos, precio, serie);
 		this.numPuertas = numPuertas;
@@ -29,6 +27,9 @@ public class Car extends Vehicle{
 		return super.getMatricula();
 	}
 
+	public int getSerie() {
+		return super.getSerie();
+	}
 	
 	public int getNumPuertas() {
 		return numPuertas;
@@ -44,8 +45,6 @@ public class Car extends Vehicle{
 	public void setCapacidadMaletero(int capacidadMaletero) {
 		this.capacidadMaletero = capacidadMaletero;
 	}
-	
-	
 	
 	
 	

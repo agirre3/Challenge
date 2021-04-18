@@ -15,6 +15,10 @@ public abstract class Vehicle {
 		this.matricula = matricula;
 	}
 	
+	public int getSerie() {
+		return serie;
+	}
+
 	public String getNumBastidor() {
 		return numBastidor;
 	}
