@@ -25,7 +25,7 @@ public class Controller {
 
 				String brand = menu.getBrand();
 				String model = menu.getModel();
-				String year = menu.getYear();
+				int year = menu.getYear();
 
 				int iDSerie = accessDB.saveSerie(brand, model, year);
 
@@ -40,7 +40,7 @@ public class Controller {
 			} else if (option == PURCHASE_TRUCK) {
 				String brand = menu.getBrand();
 				String model = menu.getModel();
-				String year = menu.getYear();
+				int year = menu.getYear();
 
 				int iDSerie = accessDB.saveSerie(brand, model, year);
 

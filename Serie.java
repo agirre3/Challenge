@@ -4,18 +4,16 @@ package G4Challenge;
 
 public class Serie {
 
-	private String marca, modelo, anio_fabricacion;
+	private String marca, modelo;
+	int anio_fabricacion;
 	//private static int idSerie = 0;
 	//private HashMap<Integer, String[]> serie = new HashMap<Integer, String[]>();
 	String[] serieType = new String[3];
 	
-	public Serie(String marca, String modelo, String anio_fabricacion) {
+	public Serie(String marca, String modelo, int anio_fabricacion) {
 		this.modelo = modelo;
 		this.marca = marca;
 		this.anio_fabricacion = anio_fabricacion;
-		serieType[0] = marca.toLowerCase();
-		serieType[1] = modelo.toLowerCase();
-		serieType[2] = anio_fabricacion;
 		/*if (idSerie == 0 || !exists()) {
 			idSerie++;
 		}

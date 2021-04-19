@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.cj.jdbc.Driver;
+import com.mysql.cj.xdevapi.Result;
 
 public class Connector {
 
@@ -31,64 +32,157 @@ public class Connector {
 		}
 	}
 
-	public int saveSerie(String brand, String model, String year) {
+	public boolean queryBrand(String brand) {
+		String query = "SELECT * FROM SERIE WHERE marca  = ?";
+		int counter = 0;
 
-		String query = "SELECT * FROM SERIE WHERE numBastidor = ?";
-		String insertSQL = "INSERT INTO SERIE VALUES (?,?,?,?)";
-		int idSerie = 0;
+		try (PreparedStatement stmt = conn.prepareStatement(query)) {
+			
+			ResultSet rs;
+			
+			stmt.setString(1, brand);
+			
+			rs = stmt.executeQuery();
+
+			while (rs.next() && counter == 0) {
+				String brand2 = rs.getString(2);
+
+				if (brand.equals(brand2)) {
+					counter++;
+					return true;
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean queryModel(String model) {
+		String query = "SELECT * FROM SERIE WHERE modelo  = ?";
 		int counter = 0;
 
 		try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 			ResultSet rs;
+			stmt.setString(1, model);
 
-			rs = stmt.executeQuery(query);
+			rs = stmt.executeQuery();
 
 			while (rs.next() && counter == 0) {
-				String brand2 = rs.getString(2);
 				String model2 = rs.getString(3);
-				String year2 = rs.getString(4);
 
-				if (brand.equals(brand2) && model.equals(model2) && year.equals(year2)) {
-					idSerie = rs.getInt(1);
+				if (model.equals(model2)) {
 					counter++;
-
-				} else {
-
-					try {
-						Serie serie = new Serie(brand, model, year);
-						PreparedStatement stmt2 = conn.prepareStatement(insertSQL);
-
-						stmt.setString(2, brand);
-						stmt.setString(3, model);
-						stmt.setString(4, year);
-
-						stmt.executeUpdate();
-
-						idSerie = rs.getInt(1);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					return true;
 				}
 			}
-		}
 
-		catch (Exception e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean queryYear(int year) {
+		String query = "SELECT * FROM SERIE WHERE anio_fabricacion  = ?";
+		int counter = 0;
+
+		try (PreparedStatement stmt = conn.prepareStatement(query)) {
+
+			ResultSet rs;
+			stmt.setInt(1, year);
+			rs = stmt.executeQuery();
+
+			while (rs.next() && counter == 0) {
+				int year2 = rs.getInt(4);
+
+				if (year == year2) {
+					counter++;
+					return true;
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public int saveSerie(String brand, String model, int year) {
+		String query = "select * from serie where marca = ? and modelo = ? and anio_fabricacion = ?";
+		String insertSQL = "insert into serie (marca, modelo, anio_fabricacion) values (?,?,?)";
+		ResultSet rs = null;
+		
+		int idSerie = 0;
+		int counter = 0;
+
+		if (queryBrand(brand) == true && queryModel(model) == true && queryYear(year) == true) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)){
+				stmt.setString(1, brand);
+				stmt.setString(2, model);
+				stmt.setInt(3, year);
+				rs = stmt.executeQuery();
+				
+				while(rs.next()) {
+					idSerie = rs.getInt(1);
+				}
+				
+				return idSerie;
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+			}
+		} 
+		else {
+
+			try {
+				Serie serie = new Serie(brand, model, year);
+				PreparedStatement stmt = conn.prepareStatement(insertSQL);
+				
+				stmt.setString(1, brand);
+				stmt.setString(2, model);
+				stmt.setInt(3, year);
+
+				stmt.executeUpdate();
+				
+				PreparedStatement stmt2 = conn.prepareStatement(query);
+				stmt2.setString(1,brand);
+				stmt2.setString(2,model);
+				stmt2.setInt(3,year);
+				
+				rs = stmt2.executeQuery();
+				
+				while(rs.next()) {
+					idSerie = rs.getInt(1);
+				}
+				
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return idSerie;
 	}
 
 	public boolean existsCar(String numBastidor) {
 
-		String query = "SELECT * FROM SERIE WHERE numBastidor = ?";
+		String query = "SELECT * FROM STOCK WHERE numBastidor = ?";
 
 		ResultSet rs;
-
+		String numBastidor2 = "";
 		try (PreparedStatement stmt = conn.prepareStatement(query);) {
-
-			rs = stmt.executeQuery(query);
-			String numBastidor2 = rs.getString(1);
+			
+			stmt.setString(1, numBastidor);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				numBastidor2 = rs.getString(1);
+			}
+		
 
 			if (numBastidor.equals(numBastidor2)) {
 				return false;
@@ -104,19 +198,19 @@ public class Connector {
 
 	public boolean saveCar(Car car1) {
 
-		String insertCar = "INSERT INTO STOCK VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String insertCar = "INSERT INTO Car VALUES (?,?,?,?,?,?,?,?)";
 
 		if (existsCar(car1.getNumBastidor()) == false) {
 			try (PreparedStatement stmt = conn.prepareStatement(insertCar)) {
 
-				stmt.setString(2, car1.getNumBastidor());
-				stmt.setString(3, car1.getMatricula());
-				stmt.setString(4, car1.getColour());
-				stmt.setInt(7, car1.getNumAsientos());
-				stmt.setInt(8, car1.getNumPuertas());
-				stmt.setInt(9, car1.getCapacidadMaletero());
-				stmt.setInt(10, car1.getPrecio());
-				stmt.setInt(11, car1.getSerie());
+				stmt.setString(1, car1.getNumBastidor());
+				stmt.setString(2, car1.getMatricula());
+				stmt.setString(3, car1.getColour());
+				stmt.setInt(4, car1.getNumPuertas());
+				stmt.setInt(5, car1.getCapacidadMaletero());
+				stmt.setInt(6, car1.getNumAsientos());
+				stmt.setInt(7, car1.getPrecio());
+				stmt.setInt(8, car1.getSerie());
 
 				int value = stmt.executeUpdate();
 

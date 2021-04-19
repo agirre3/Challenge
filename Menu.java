@@ -42,13 +42,13 @@ public class Menu {
 		return model;
 	}
 
-	public String getYear() {
+	public int getYear() {
 
 		System.out.println("Give me the year of fabrication. 4 characters, please");
-		String year = Console.readString();
-		while (year.length() != 4) {
+		int year = Console.readInt();
+		while (year > 2021 && year < 1990) {
 			System.out.println("Wrong year. Please, give me the 4 characters of the year");
-			year = Console.readString();
+			year = Console.readInt();
 		}
 		return year;
 
@@ -67,7 +67,7 @@ public class Menu {
 		System.out.println("Give me seat number (4,5 or 9)");
 		int numAsientos = Console.readInt();
 
-		while (numAsientos < 4 && numAsientos > 9) {
+		while (numAsientos < 4 || numAsientos > 9) {
 			System.out.println("Wrong number of doors. between 4 - 9");
 			numAsientos = Console.readInt();
 		}
@@ -85,13 +85,13 @@ public class Menu {
 		String colour = Console.readString().toLowerCase();
 		while (!colour.equals("blue") && !colour.equals("red") && !colour.equals("green") && !colour.equals("yellow")
 				&& !colour.equals("grey") && !colour.equals("black") && !colour.equals("brown")
-				&& colour.equals("white") && !colour.equals("orange") && !colour.equals("pink")) {
+				&& !colour.equals("white") && !colour.equals("orange") && !colour.equals("pink")) {
 			System.out.println(
 					"Wrong colour. Give me a correct colour: blue, red, green, yellow, grey, black, brown, white, orange or pink");
 			colour = Console.readString().toLowerCase();
 		}
 
-		System.out.println("Give me the price of the car (less than 200.000");
+		System.out.println("Give me the price of the car (less than 200.000)");
 		int price = Console.readInt();
 		while (price > 200000) {
 			System.out.println("Wrong price. Give me a price under 200.000");
@@ -109,6 +109,7 @@ public class Menu {
 
 		while (matricula.length() < 7 || matricula.length() > 7) {
 			System.out.println("Wrong number of license plate. 7 characters");
+			matricula = Console.readString().toUpperCase();
 		}
 
 		Car car = new Car(numBastidor, colour, matricula, numAsientos, price, 0, numPuertas, capacidadMaletero);
