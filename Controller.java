@@ -38,10 +38,17 @@ public class Controller {
 					e.printStackTrace();
 				}
 			} else if (option == PURCHASE_TRUCK) {
+				
 				String brand = menu.getBrand();
 				String model = menu.getModel();
 				int year = menu.getYear();
-
+				
+				while(brand == null || model== null || year <= 0) {
+					brand = menu.getBrand();
+					model = menu.getModel();
+					year = menu.getYear();
+				}
+				
 				int iDSerie = accessDB.saveSerie(brand, model, year);
 
 				Truck truck1 = menu.newTruck();
@@ -55,7 +62,7 @@ public class Controller {
 			} else if (option == SALE) {
 				int typeOfvehicle = menu.choose();
 				try {
-					accessDB.deleteVehicle(menu.getNumOfBastidor());
+					accessDB.deleteVehicle(typeOfvehicle, menu.getNumOfBastidor());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -77,35 +84,17 @@ public class Controller {
 				if(accessDB.existsCar(numOfBastidor) == true) {
 					int attributeToChange = menu.showMenu2();
 					String newData = "";
+					int newData2 = 0;
 					
 					if(attributeToChange == 1 || attributeToChange == 2 || attributeToChange == 3) {
-						if(attributeToChange == 1){
-							newData = menu.getStringCarModification(attributeToChange);
-						}
-						else if(attributeToChange == 2) {
-							newData = menu.getStringCarModification(attributeToChange);
-						}
-						else if(attributeToChange == 3) {
-							newData = menu.getStringCarModification(attributeToChange);
-						}
+						newData = menu.getStringCarModification(attributeToChange);
 						accessDB.updateCar(attributeToChange, numOfBastidor, newData);
 					}
 					else if(attributeToChange == 4 || attributeToChange == 5 || attributeToChange == 6 	|| attributeToChange == 7) {
-						int newData2 = 0;
 						
-						if(attributeToChange == 4){
-							newData2 = menu.getIntCarModification(attributeToChange);
-						}
-						else if(attributeToChange == 5){
-							newData2 = menu.getIntCarModification(attributeToChange);
-						}
-						else if(attributeToChange == 6){
-							newData2 = menu.getIntCarModification(attributeToChange);
-						}
-						else if(attributeToChange == 7){
-							newData2 = menu.getIntCarModification(attributeToChange);
-							
-						}
+						newData2 = menu.getIntCarModification(attributeToChange);
+						accessDB.updateCar(attributeToChange, numOfBastidor, newData2);
+						
 					}
 					else {
 						System.out.println("exit");

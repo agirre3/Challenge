@@ -114,13 +114,14 @@ public class Connector {
 	}
 
 	public int saveSerie(String brand, String model, int year) {
+		
 		String query = "select * from serie where marca = ? and modelo = ? and anio_fabricacion = ?";
 		String insertSQL = "insert into serie (marca, modelo, anio_fabricacion) values (?,?,?)";
 		ResultSet rs = null;
 		
 		int idSerie = 0;
 		int counter = 0;
-
+		
 		if (queryBrand(brand) == true && queryModel(model) == true && queryYear(year) == true) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)){
 				stmt.setString(1, brand);
@@ -167,6 +168,8 @@ public class Connector {
 			}
 		}
 		return idSerie;
+		
+		
 	}
 
 	public boolean existsCar(String numBastidor) {
@@ -175,7 +178,7 @@ public class Connector {
 
 		ResultSet rs;
 		String numBastidor2 = "";
-		try (PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (PreparedStatement stmt = conn.prepareStatement(query)) {
 			
 			stmt.setString(1, numBastidor);
 			rs = stmt.executeQuery();
@@ -229,40 +232,80 @@ public class Connector {
 		return false;
 	}
 
-	public void saveTruck(Truck truck1) {
+	public boolean existsTruck(String numBastidor) {
 
-		String insertCar = "INSERT INTO STOCK VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String query = "SELECT * FROM Truck WHERE numBastidor = ?";
 
-		try (PreparedStatement stmt = conn.prepareStatement(insertCar)) {
-
-			stmt.setString(2, truck1.getNumBastidor());
-			stmt.setString(3, truck1.getMatricula());
-			stmt.setString(4, truck1.getColour());
-			stmt.setInt(5, truck1.getCarga());
-			/* ??? */ stmt.setString(6, truck1.getTipoMercancia() + "");
-			stmt.setInt(7, truck1.getNumAsientos());
-			stmt.setInt(10, truck1.getPrecio());
-			stmt.setInt(11, truck1.getSerie());
-
-			int value = stmt.executeUpdate();
-
-			// quitarlo una vez probado
-			if (value > 0)
-				System.out.println("Insertado correctamente");
-			else {
-				System.out.println("No se ha insertado nada");
+		ResultSet rs;
+		String numBastidor2 = "";
+		try (PreparedStatement stmt = conn.prepareStatement(query)) {
+			
+			stmt.setString(1, numBastidor);
+			rs = stmt.executeQuery();
+			while(rs.next()) {
+				numBastidor2 = rs.getString(1);
 			}
-		}
+		
 
-		catch (SQLException e) {
+			if (numBastidor.equals(numBastidor2)) {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
+
 	}
 
-	public void deleteVehicle(String numBastidor) {
-		//necesito algo más?
+	
+	public boolean saveTruck(Truck truck1) {
 
-		String deleteVehicle = "DELETE FROM STOCK where numBastidor = ?";
+			String insertCar = "INSERT INTO Truck VALUES (?,?,?,?,?,?,?,?)";
+
+			if (existsCar(truck1.getNumBastidor()) == false) {
+				try (PreparedStatement stmt = conn.prepareStatement(insertCar)) {
+
+					stmt.setString(1, truck1.getNumBastidor());
+					stmt.setString(2, truck1.getMatricula());
+					stmt.setString(3, truck1.getColour());
+					stmt.setInt(4, truck1.getCarga());
+/*funciona??*/		stmt.setString(5, truck1.getTipoMercancia() + "");
+					stmt.setInt(6, truck1.getNumAsientos());
+					stmt.setInt(7, truck1.getPrecio());
+					stmt.setInt(8, truck1.getSerie());
+
+					int value = stmt.executeUpdate();
+
+					// quitarlo una vez probado
+					if (value > 0)
+						System.out.println("Insertado correctamente");
+					return true;
+				}
+
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("No se ha insertado nada");
+
+			return false;
+		}
+
+	
+
+	public void deleteVehicle(int typeOfvehicle, String numBastidor) {
+		//necesito algo más?
+		String deleteVehicle = "";
+
+		if(typeOfvehicle == 1) {
+			deleteVehicle = "DELETE FROM Car where numBastidor = ?";
+		}
+		else {
+			deleteVehicle = "DELETE FROM Truck where numBastidor = ?";
+		}
+		
 
 		try (PreparedStatement stmt = conn.prepareStatement(deleteVehicle)) {
 
@@ -286,11 +329,11 @@ public class Connector {
 		String query = "";
 		
 		if (option == 1) {
-			query = "update numBastidor from STOCK where numOfbastidor = ?";
+			query = "update numBastidor from Car where numOfbastidor = ?";
 			
 			try (PreparedStatement stmt = conn.prepareStatement(query);) {
 
-				stmt.setString(1, numOfbastidor);
+				stmt.setString(1, newValue);
 				return true;
 				
 			} catch (SQLException e) {
@@ -300,11 +343,11 @@ public class Connector {
 		}
 		
 		else if(option == 2) {
-			query = "update numBastidor from STOCK where numOfbastidor = ?";
+			query = "update matricula from Car where numOfbastidor = ?";
 			
 			try (PreparedStatement stmt = conn.prepareStatement(query);) {
 
-				stmt.setString(3, newValue);
+				stmt.setString(1, newValue);
 				return true;
 				
 			} catch (SQLException e) {
@@ -313,11 +356,72 @@ public class Connector {
 			}
 		}
 		else {
-			query = "update numBastidor from STOCK where numOfbastidor = ?";
+			query = "update numBastidor from Car where numOfbastidor = ?";
 			
 			try (PreparedStatement stmt = conn.prepareStatement(query);) {
 
-				stmt.setString(2, newValue);
+				stmt.setString(1, newValue);
+				return true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	public boolean updateCar(int option, String numOfbastidor, int newValue) {
+
+		String query = "";
+		
+		if (option == 4) {
+			query = "update numAsientos from Car where numOfbastidor = ?";
+			
+			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+
+				stmt.setInt(1, newValue);
+				return true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		else if(option == 5) {
+			query = "update precio from Car where numOfbastidor = ?";
+			
+			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+
+				stmt.setInt(1, newValue);
+				return true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(option == 6){
+			query = "update numPuertas from Car where numOfbastidor = ?";
+			
+			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+
+				stmt.setInt(1, newValue);
+				return true;
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		else {
+			query = "update capacidadMaletero from Car where numOfbastidor = ?";
+			
+			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+
+				stmt.setInt(1, newValue);
 				return true;
 				
 			} catch (SQLException e) {
@@ -328,6 +432,8 @@ public class Connector {
 		return false;
 	}
 
+
+	
 	/*
 	 * public static void main(String[] args) {
 	 * 

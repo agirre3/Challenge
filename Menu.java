@@ -1,5 +1,6 @@
 package G4Challenge;
 
+
 public class Menu {
 
 	public void showMenu() {
@@ -99,21 +100,22 @@ public class Menu {
 
 		System.out.println("Give me the number of bastidor. 17 characters");
 		String numBastidor = Console.readString();
-		while (numBastidor.length() < 17 || numBastidor.length() > 17) {
+		/*while (numBastidor.length() < 17 || numBastidor.length() > 17) {
 			System.out.println("Wrong number of bastidor. 17 characters");
 			numBastidor = Console.readString();
-		}
+		}*/
 
 		System.out.println("Give me the license plate. 7 characters maximum");
 		String matricula = Console.readString().toUpperCase();
 
-		while (matricula.length() < 7 || matricula.length() > 7) {
+		/*while (matricula.length() < 7 || matricula.length() > 7) {
 			System.out.println("Wrong number of license plate. 7 characters");
 			matricula = Console.readString().toUpperCase();
-		}
+		}*/
 
+		
 		Car car = new Car(numBastidor, colour, matricula, numAsientos, price, 0, numPuertas, capacidadMaletero);
-
+				
 		return car;
 
 	}
@@ -181,7 +183,8 @@ public class Menu {
 
 	public int showMenu2() {
 		System.out.println("What do you want to change? Choose an option");
-		System.out.println("Option 1: numBastidor" + "\nOption 2: colour" + "\nOption 3: matricula."
+		System.out.println("Option 1: numBastidor" + 
+		"\nOption 2: colour" + "\nOption 3: matricula."
 				+ "\nOption 4: numAsientos" + "\nOption 5: price" + "\nOption 6: numPuertas"
 				+ "\nOption 7: capacidadMaletero" + "\nOption 8: Exit.");
 		int option = Console.readInt();
@@ -295,8 +298,7 @@ public class Menu {
 		}
 		return numBastidor;
 	}
-
-
+ 
 
 	/*
 	 * public
@@ -349,11 +351,11 @@ public class Menu {
 	 * else { System.out.println("Bye."); }
 	 * 
 	 * System.out.println("Correct"); }
-	 */
+	*/
 
 	public int choose() {
 
-		System.out.println("The vehicle is a car (option 1) or a truck (option 2)?" + " Give me the option, please");
+		System.out.println("The vehicle is a car (option 1) or a truck (option 2)? Give me the option, please");
 		int option = Console.readInt();
 
 		while (option != 1 && option != 2) {
@@ -362,7 +364,7 @@ public class Menu {
 		}
 
 		return option;
-	}
+	} 
 
 
 
