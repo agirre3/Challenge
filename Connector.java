@@ -9,13 +9,15 @@ import java.sql.SQLException;
 import com.mysql.cj.jdbc.Driver;
 
 
+
 public class Connector {
 
 	private static Connection conn;
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	private static final String user = "team4";
 	private static final String password = "team4";
-	private static final String url = "jdbc:mysql://10.14.1.15:3306/concesionario";
+	private static final String url = "jdbc:mysql://127.0.0.1/concesionario";
+			//"jdbc:mysql://10.14.1.15:3306/concesionario";
 
 	public Connector() {
 
@@ -48,7 +50,7 @@ public class Connector {
 			while (rs.next() && counter == 0) {
 				String brand2 = rs.getString(2);
 
-				if (brand.equals(brand2)) {
+				if (brand.equalsIgnoreCase(brand2)) {
 					counter++;
 					return true;
 				}
@@ -75,7 +77,7 @@ public class Connector {
 			while (rs.next() && counter == 0) {
 				String model2 = rs.getString(3);
 
-				if (model.equals(model2)) {
+				if (model.equalsIgnoreCase(model2)) {
 					counter++;
 					return true;
 				}
@@ -242,6 +244,7 @@ public class Connector {
 			
 			stmt.setString(1, numBastidor);
 			rs = stmt.executeQuery();
+			
 			while(rs.next()) {
 				numBastidor2 = rs.getString(1);
 			}
@@ -331,7 +334,7 @@ public class Connector {
 		if (option == 1) {
 			query = "update Car set numBastidor = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -347,7 +350,7 @@ public class Connector {
 		else if(option == 2) {
 			query = "update Car set colour = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -363,7 +366,7 @@ public class Connector {
 		else {
 			query = "update Car set matricula = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -385,7 +388,7 @@ public class Connector {
 		if (option == 4) {
 			query = "update Car set numAsientos = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -401,7 +404,7 @@ public class Connector {
 		else if(option == 5) {
 			query = "update Car set precio = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -416,7 +419,7 @@ public class Connector {
 		else if(option == 6){
 			query = "update Car set numPuertas = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -432,7 +435,7 @@ public class Connector {
 		else if(option == 7){
 			query = "update Car set capacidadMaletero = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -450,11 +453,10 @@ public class Connector {
 	public boolean updateTruck(int option, String numOfbastidor, String newValue) {
 
 		String query = "";
-		
 		if (option == 1) {
 			query = "update Truck set numBastidor = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -470,13 +472,14 @@ public class Connector {
 		else if(option == 2) {
 			query = "update Truck set colour = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
 				
 				stmt.executeUpdate();
-				return true;
+				return true;		
+				
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -486,7 +489,7 @@ public class Connector {
 		else if(option == 3){
 			query = "update Truck set matricula = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -502,7 +505,7 @@ public class Connector {
 		else {
 			query = "update Truck set tipoMercancia = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setString(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -525,7 +528,7 @@ public class Connector {
 		if (option == 5) {
 			query = "update Truck set carga = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -541,7 +544,7 @@ public class Connector {
 		else if(option == 6) {
 			query = "update Truck set numAsientos = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -556,7 +559,7 @@ public class Connector {
 		else if(option == 7){
 			query = "update Truck set precio = ? where numBastidor = ?";
 			
-			try (PreparedStatement stmt = conn.prepareStatement(query);) {
+			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 
 				stmt.setInt(1, newValue);
 				stmt.setString(2, numOfbastidor);
@@ -587,17 +590,13 @@ public class Connector {
 		return false;
 	}
 
-	public void queryTwoDates(int option, String date1, String date2) {
+	public void queryTwoDates(String date1, String date2) {
 		String query = "";
 		ResultSet rs;
 		ResultSetMetaData rsmd;
 		
-		if(option == 1) {
 			query = "SELECT * FROM HISTORIC WHERE FECHA BETWEEN ? AND ? and accion = 'SELL'";
-		}
-		else {
-			query = "SELECT * FROM HISTORIC WHERE FECHA BETWEEN ? AND ? and accion = 'SELL'";
-		}
+		
 		
 		try(PreparedStatement stmt = conn.prepareStatement(query)){
 			stmt.setString(1, date1);
@@ -610,7 +609,7 @@ public class Connector {
 			
 			while(column <= numberOfColumns) {
 				String name = rsmd.getColumnName(column);
-				System.out.print(name + "\t");
+				System.out.print(name + "  ");
 				column++;
 			}
 			System.out.println("");
@@ -632,19 +631,68 @@ public class Connector {
 				String repainted = rs.getString(15);
 				
 	
-					System.out.println(vehicleType + "\t"+ date + "\t"+ time  + "\t"+ accion + "\t"+ numBastidor + "\t"+  matricula + "\t"+  colour + "\t"+ carga + "\t" + tipoMercancia + "\t" + numPuertas + "\t"+  capacidadMaletero + "\t"+  numAsientos + "\t"+  precio + "\t"+ idSerie + "\t"+ repainted);
-				
-				
+					System.out.println(vehicleType + "\t\t" + date + "\t"+ time  + "\t"+ accion + "\t"
+					+ numBastidor + "\t"+  matricula + "\t"+  colour + "\t"+ carga + "\t" + tipoMercancia + "\t" 
+					+ numPuertas + "\t"+  capacidadMaletero + "\t"+  numAsientos + "\t"+  precio + "\t"
+					+ idSerie + "\t"+ repainted);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
 	
+	public void showStock() {
+		String query = "";
+		ResultSet rs;
+		ResultSetMetaData rsmd;
+		
+			query = "SELECT * FROM STOCK, SERIE where stock.idSerie = serie.idSerie";
+		
+		
+		try(PreparedStatement stmt = conn.prepareStatement(query)){
+			rs = stmt.executeQuery();
+			
+			rsmd = rs.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			int column = 1;
+			
+			while(column <= numberOfColumns) {
+				String name = rsmd.getColumnName(column);
+				System.out.print(name + "  ");
+				column++;
+			}
+			System.out.println("");
+			while(rs.next()) {
+				String vehicleType = rs.getString(1);
+				String numBastidor = rs.getString(2);
+				String matricula = rs.getString(3);
+				String colour = rs.getString(4);
+				int carga = rs.getInt(5);
+				String tipoMercancia = rs.getString(6);
+				int numAsientos = rs.getInt(7);
+				int numPuertas = rs.getInt(8);
+				int capacidadMaletero = rs.getInt(9);
+				int precio = rs.getInt(10);
+				int idSerie = rs.getInt(11);
+				String repainted = rs.getString(12);
+				int idSerie2 = rs.getInt(13);
+				String brand = rs.getString(14);
+				String model = rs.getString(15);
+				int year = rs.getInt(16);
+				
+				
+					System.out.println(vehicleType + "\t" + numBastidor + " " +  matricula + "    "+ 
+					colour + "\t" + carga + "\t" + tipoMercancia + "\t\t" + numAsientos + "\t\t" + numPuertas + "\t"+  capacidadMaletero
+					+ "\t\t" +  precio + "\t" + idSerie + "\t\t"+ repainted + "\t"+ idSerie2 + "\t" + brand + "\t" + model + "\t" + year);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
 	
 }
 

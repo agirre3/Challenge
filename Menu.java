@@ -114,7 +114,7 @@ public class Menu {
 		}*/
 
 		
-		Car car = new Car(numBastidor, matricula, colour, numAsientos, price, 0, numPuertas, capacidadMaletero);
+		Car car = new Car(numBastidor, colour, matricula, numAsientos, price, -1, numPuertas, capacidadMaletero);
 				
 		return car;
 
@@ -156,7 +156,7 @@ public class Menu {
 			colour = Console.readString().toLowerCase();
 		}
 
-		System.out.println("Give me the price of the car (less than 200.000)");
+		System.out.println("Give me the price of the truck (less than 200.000)");
 		int price = Console.readInt();
 		while (price > 200000) {
 			System.out.println("Wrong price. Give me a price under 200.000");
@@ -174,9 +174,10 @@ public class Menu {
 
 		while (matricula.length() < 7 || matricula.length() > 7) {
 			System.out.println("Wrong number of license plate. 7 characters");
+			matricula = Console.readString().toUpperCase();
 		}
 
-		Truck truck = new Truck(numBastidor, matricula, colour, numAsientos, price, 0, carga, tipoMercancia);
+		Truck truck = new Truck(numBastidor, matricula, colour, numAsientos, price, -1, carga, tipoMercancia);
 
 		return truck;
 
@@ -403,7 +404,7 @@ public class Menu {
 						+ "\nOption 4: tipoMercancia"
 						+ "\nOption 5: carga" 
 						+ "\nOption 6: numAsientos" 
-						+ "\nOption 7: precio" + "\nOption 9: Exit.");
+						+ "\nOption 7: precio" + "\nOption 8: Exit.");
 		int option = Console.readInt();
 		checkOption(option);
 

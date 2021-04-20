@@ -6,7 +6,7 @@ public class Controller {
 	private Connector accessDB;
 
 	private static final int PURCHASE_CAR = 1, PURCHASE_TRUCK = 2, SALE = 3, STOCK = 4, MODIFY_SETTINGS_CAR = 5,
-			MODIFY_SETTINGS_TRUCK = 6, QUERY_TWODATES = 7, XML = 8, EXIT = 9;
+			MODIFY_SETTINGS_TRUCK = 6, QUERY_TWODATES = 7, XML = 8;
 
 	public Controller(Menu menu, Connector accessDB) {
 
@@ -68,16 +68,30 @@ public class Controller {
 			} else if (option == SALE) {
 				int typeOfvehicle = menu.choose();
 				String number = menu.getVehicleNumOfBastidor();
-				if (accessDB.existsCar(number) == true) {
-					try {
-						accessDB.deleteVehicle(typeOfvehicle, number);
-					} catch (Exception e) {
-						e.printStackTrace();
+				if (typeOfvehicle == 1) {
+					if (accessDB.existsCar(number) == true) {
+						try {
+							accessDB.deleteVehicle(typeOfvehicle, number);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						menu.vehicleNotExists();
 					}
 				} else {
-					menu.vehicleNotExists();
+					if (accessDB.existsTruck(number) == true) {
+						try {
+							accessDB.deleteVehicle(typeOfvehicle, number);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						menu.vehicleNotExists();
+					}
 				}
-
+			} else if (option == STOCK) {
+				accessDB.showStock();
+			
 			} else if (option == MODIFY_SETTINGS_CAR) {
 
 				String numOfBastidor = menu.getVehicleNumOfBastidor();
@@ -116,8 +130,7 @@ public class Controller {
 						boolean result = accessDB.updateTruck(attributeToChange, numOfBastidor, newData);
 						menu.getResultOfOperation(result);
 					} else if (attributeToChange == 5 || attributeToChange == 6 || attributeToChange == 7) {
-
-						newData2 = menu.getIntCarModification(attributeToChange);
+						newData2 = menu.getIntTruckModification(attributeToChange);
 						boolean result = accessDB.updateTruck(attributeToChange, numOfBastidor, newData2);
 						menu.getResultOfOperation(result);
 					} else {
@@ -131,8 +144,7 @@ public class Controller {
 			else if (option == QUERY_TWODATES) {
 				String date1 = menu.getADate();
 				String date2 = menu.getADate();
-				int result = menu.choose();
-				accessDB.queryTwoDates(result, date1, date2);
+				accessDB.queryTwoDates(date1, date2);
 
 			} else {
 				menu.exit();
@@ -141,9 +153,6 @@ public class Controller {
 
 		} while (option >= PURCHASE_CAR && option <= MODIFY_SETTINGS_TRUCK);
 
-		if (option == EXIT) {
-
-		}
 	}
 
 }

@@ -6,13 +6,14 @@ public abstract class Vehicle {
 	private String colour, matricula, numBastidor;
 	private int serie;
 
-	public Vehicle(String numBastidor, String colour, String matricula, int numAsientos, int precio, int serie) {
+	public Vehicle(String numBastidor, String matricula, String colour, int numAsientos, int precio, int serie) {
 		this.numBastidor = numBastidor;
+		this.matricula = matricula;
 		this.colour = colour;
 		this.numAsientos = numAsientos;
 		this.precio = precio;
 		this.serie = serie;
-		this.matricula = matricula;
+		
 	}
 	
 	public int getSerie() {
