@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.cj.jdbc.Driver;
-import com.mysql.cj.xdevapi.Result;
+
 
 public class Connector {
 
@@ -309,6 +309,7 @@ public class Connector {
 
 		try (PreparedStatement stmt = conn.prepareStatement(deleteVehicle)) {
 
+			stmt.setString(1, numBastidor);
 			int value = stmt.executeUpdate();
 
 			// quitarlo una vez probado

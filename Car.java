@@ -15,21 +15,6 @@ public class Car extends Vehicle{
 		this.capacidadMaletero = capacidadMaletero;
 	}
 
-	public String getNumBastidor() {
-		return super.getNumBastidor();
-	}
-	
-	public String getColour() {
-		return super.getColour();
-	}
-	
-	public String getMatricula() {
-		return super.getMatricula();
-	}
-
-	public int getSerie() {
-		return super.getSerie();
-	}
 	
 	public int getNumPuertas() {
 		return numPuertas;

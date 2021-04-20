@@ -290,12 +290,12 @@ public class Menu {
 
 
 	public String getNumOfBastidor() {
-		System.out.println("What car do you want to modify? Give me the numBastidor");
+		System.out.println("What car do you want to change/delete? Give me the numBastidor");
 		String numBastidor = Console.readString();
-		while (numBastidor.length() < 17 || numBastidor.length() > 17) {
+		/*while (numBastidor.length() < 17 || numBastidor.length() > 17) {
 			System.out.println("Wrong number of bastidor. 17 characters");
 			numBastidor = Console.readString();
-		}
+		}*/
 		return numBastidor;
 	}
  
