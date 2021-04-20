@@ -1,13 +1,13 @@
 package G4Challenge;
 
+import java.sql.Date;
 
 public class Menu {
 
 	public void showMenu() {
 		System.out.println("Option 1: Buy a car." + "\nOption 2: Buy a truck." + "\nOption 3: Sell a car/truck."
-				+ "\nOption 4: Show on the screen the stock" + "\nOption 5: Show on the screen the historic"
-				+ "\nOption 6: Modify setting of a car" + "\nOption 7: Modify setting of a truck"
-				+ "\nOption 8: Query between two dates" + "\nOption 9: Exit.");
+				+ "\nOption 4: Show on the screen the stock" + "\nOption 5: Modify setting of a car" + "\nOption 6: Modify setting of a truck"
+				+ "\nOption 7: Show on screen the sales between two dates" + "\nOption 8: Exit.");
 
 	}
 
@@ -65,7 +65,7 @@ public class Menu {
 			numPuertas = Console.readInt();
 		}
 
-		System.out.println("Give me seat number (4,5 or 9)");
+		System.out.println("Give me seat number (between 4 and 9)");
 		int numAsientos = Console.readInt();
 
 		while (numAsientos < 4 || numAsientos > 9) {
@@ -114,7 +114,7 @@ public class Menu {
 		}*/
 
 		
-		Car car = new Car(numBastidor, colour, matricula, numAsientos, price, 0, numPuertas, capacidadMaletero);
+		Car car = new Car(numBastidor, matricula, colour, numAsientos, price, 0, numPuertas, capacidadMaletero);
 				
 		return car;
 
@@ -140,16 +140,17 @@ public class Menu {
 
 		System.out.println("Give the type of merchandise (one character: G, A or P)");
 		char tipoMercancia = Console.readChar();
-		while (tipoMercancia != 'G' && tipoMercancia != 'g' && tipoMercancia != 'A' && tipoMercancia != 'A'
+		while (tipoMercancia != 'G' && tipoMercancia != 'g' && tipoMercancia != 'A' && tipoMercancia != 'a'
 				&& tipoMercancia != 'p' && tipoMercancia != 'P') {
 			System.out.println("Wrong type of merchandise (one character: G, A or P)");
+			tipoMercancia = Console.readChar();
 		}
 
 		System.out.println("Give me the colour of the car: blue, red, green, yellow, grey, black, brown, white, orange or pink");
 		String colour = Console.readString().toLowerCase();
-		while (colour != "blue" && colour != "red" && colour != "green" && colour != "yellow" && colour != "grey"
-				&& colour != "black" && colour != "brown" && colour != "white" && colour != "orange"
-				&& colour != "pink") {
+		while (!colour.equals("blue") && !colour.equals("red") && !colour.equals("green") && !colour.equals("yellow")  && !colour.equals("grey") 
+				&& !colour.equals("black")  && !colour.equals("brown")  && !colour.equals("white" ) && !colour.equals("orange") 
+				&& !colour.equals("pink")) {
 			System.out.println(
 					"Wrong colour. Give me a correct colour: blue, red, green, yellow, grey, black, brown, white, orange or pink");
 			colour = Console.readString().toLowerCase();
@@ -175,7 +176,7 @@ public class Menu {
 			System.out.println("Wrong number of license plate. 7 characters");
 		}
 
-		Truck truck = new Truck(numBastidor, colour, matricula, numAsientos, price, 0, carga, tipoMercancia);
+		Truck truck = new Truck(numBastidor, matricula, colour, numAsientos, price, 0, carga, tipoMercancia);
 
 		return truck;
 
@@ -223,9 +224,9 @@ public class Menu {
 		else if(attributeToChange == 2) {
 			System.out.println("Give me the new colour of the car:blue, red, green, yellow, grey, black, brown, white, orange or pink");
 			String colour = Console.readString().toLowerCase();
-			while (colour != "blue" && colour != "red" && colour != "green" && colour != "yellow" && colour != "grey"
-					&& colour != "black" && colour != "brown" && colour != "white" && colour != "orange"
-					&& colour != "pink") {
+			while (!colour.equals("blue") && !colour.equals("red") && !colour.equals("green") && !colour.equals("yellow")  && !colour.equals("grey") 
+					&& !colour.equals("black")  && !colour.equals("brown")  && !colour.equals("white" ) && !colour.equals("orange") 
+					&& !colour.equals("pink")) {
 				System.out.println(
 						"Wrong colour. Give me a correct colour: blue, red, green, yellow, grey, black, brown, white, orange or pink");
 				colour = Console.readString().toLowerCase();
@@ -237,6 +238,7 @@ public class Menu {
 			String matricula = Console.readString();
 			while (matricula.length() < 7 || matricula.length() > 7) {
 				System.out.println("Wrong number of license plate. 7 characters");
+				matricula = Console.readString();
 			}
 			return matricula;
 		}
@@ -246,11 +248,11 @@ public class Menu {
 	public int getIntCarModification(int attributeToChange) {
 		
 		if(attributeToChange == 4) {
-			System.out.println("Give me seat number (2 or 3)");
+			System.out.println("Give me seat number (between 4 and 9)");
 			int numAsientos = Console.readInt();
 			
-			while (numAsientos != 2 && numAsientos != 3) {
-				System.out.println("Wrong number of doors. 2 or 3");
+			while (numAsientos < 4 || numAsientos > 9) {
+				System.out.println("Wrong number of seats. (between 4 and 9)");
 				numAsientos = Console.readInt();
 			}	
 			return numAsientos;
@@ -277,7 +279,7 @@ public class Menu {
 			return numPuertas;
 		}
 		else {
-			System.out.println("Give me the new capacity of the porter(between 100 and 2000");
+			System.out.println("Give me the new capacity of the porter(between 100 and 2000)");
 			int capacidadMaletero = Console.readInt();
 
 			while (capacidadMaletero < 100 && capacidadMaletero > 2000) {
@@ -288,9 +290,90 @@ public class Menu {
 		}
 	}
 
+	
+	public String getStringTruckModification(int attributeToChange) {
+		
+		if(attributeToChange == 1) {
+			System.out.println("Give me the new number of bastidor of the car");
+			String numBastidor = Console.readString();
+			while (numBastidor.length() < 17 || numBastidor.length() > 17) {
+				System.out.println("Wrong number of bastidor. 17 characters");
+				numBastidor = Console.readString();
+			}
+			return numBastidor;
+		}
+		else if(attributeToChange == 2) {
+			System.out.println("Give me the new colour of the truck:blue, red, green, yellow, grey, black, brown, white, orange or pink");
+			String colour = Console.readString().toLowerCase();
+			while (!colour.equals("blue") && !colour.equals("red") && !colour.equals("green") && !colour.equals("yellow")  && !colour.equals("grey") 
+					&& !colour.equals("black")  && !colour.equals("brown")  && !colour.equals("white" ) && !colour.equals("orange") 
+					&& !colour.equals("pink")) {
+				System.out.println(
+						"Wrong colour. Give me a correct colour: blue, red, green, yellow, grey, black, brown, white, orange or pink");
+				colour = Console.readString().toLowerCase();
+			}
+			return colour;
+		}
+		else if(attributeToChange == 3){
+			System.out.println("Give me the new matricula");
+			String matricula = Console.readString();
+			while (matricula.length() < 7 || matricula.length() > 7) {
+				System.out.println("Wrong number of license plate. 7 characters");
+				matricula = Console.readString();
+			}
+			return matricula;
+		}
+		else{
+			System.out.println("Give the type of merchandise (one character: G, A or P)");
+			char tipoMercancia = Console.readChar();
+			while (tipoMercancia != 'G' && tipoMercancia != 'g' && tipoMercancia != 'A' && tipoMercancia != 'A'
+					&& tipoMercancia != 'p' && tipoMercancia != 'P') {
+				System.out.println("Wrong type of merchandise (one character: G, A or P)");
+				tipoMercancia = Console.readChar();
+			}
+			return tipoMercancia + "";
+		}
+		
+	}
 
-	public String getNumOfBastidor() {
-		System.out.println("What car do you want to change/delete? Give me the numBastidor");
+	public int getIntTruckModification(int attributeToChange) {
+				
+		if(attributeToChange == 5) {
+			System.out.println("Give me the container's load limit. Maximum 100.000");
+			int carga = Console.readInt();
+
+			while (carga < 0 && carga > 100000) {
+				System.out.println("Wrong container's load limit. Maximum 100.000");
+				carga = Console.readInt();
+			}
+			return carga;
+		}
+		else if(attributeToChange == 6) {
+			System.out.println("Give me seat number (between 4 and 9)");
+			int numAsientos = Console.readInt();
+			
+			while (numAsientos < 4 || numAsientos > 9) {
+				System.out.println("Wrong number of seats. (between 4 and 9)");
+				numAsientos = Console.readInt();
+			}	
+			return numAsientos;
+		}
+			
+		else {
+			System.out.println("Give me the new price of the car (less than 200.000)");
+				int price = Console.readInt();
+				while (price > 200000) {
+					System.out.println("Wrong price. Give me a price under 200.000");
+				}
+			
+			return price;
+		}
+		
+	}
+	
+
+	public String getVehicleNumOfBastidor() {
+		System.out.println("What vehicle do you want to change/delete? Give me the numBastidor");
 		String numBastidor = Console.readString();
 		/*while (numBastidor.length() < 17 || numBastidor.length() > 17) {
 			System.out.println("Wrong number of bastidor. 17 characters");
@@ -298,60 +381,36 @@ public class Menu {
 		}*/
 		return numBastidor;
 	}
- 
+	
 
-	/*
-	 * public
-	 * 
-	 * int option = recogerUserOption2();
-	 * 
-	 * if (option == 1) {
-	 * System.out.println("Give me the new number of bastidor. 17 characters");
-	 * numBastidor = Console.readString(); while(numBastidor.length() < 17 ||
-	 * numBastidor.length() > 17) {
-	 * System.out.println("Wrong number of bastidor. 17 characters"); numBastidor =
-	 * Console.readString(); }
-	 * 
-	 * } else if (option == 2){ System.out.
-	 * println("Give me the new colour of the car: blue, red, green, yellow, grey, black, brown, white, orange or pink"
-	 * ); String colour = Console.readString().toLowerCase(); while(colour != "blue"
-	 * && colour != "red" && colour != "green" && colour != "yellow" && colour !=
-	 * "grey" && colour != "black" && colour != "brown" && colour != "white" &&
-	 * colour != "orange" && colour != "pink") { System.out.
-	 * println("Wrong colour. Give me a correct colour: blue, red, green, yellow, grey, black, brown, white, orange or pink"
-	 * ); colour = Console.readString().toLowerCase(); } } else if (option == 3) {
-	 * System.out.println("Give me the license plate. 7 characters maximum"); String
-	 * matricula = Console.readString().toUpperCase();
-	 * 
-	 * while(matricula.length() < 7 || matricula.length() > 7) {
-	 * System.out.println("Wrong number of license plate. 7 characters"); } } else
-	 * if (option == 4) {
-	 * System.out.println("Give me the new seat number (2 or 3)"); int numAsientos =
-	 * Console.readInt();
-	 * 
-	 * while(numAsientos != 2 && numAsientos != 3) {
-	 * System.out.println("Wrong number of doors. 2 or 3"); numAsientos =
-	 * Console.readInt(); } } else if (option == 5) {
-	 * System.out.println("Give me the new price of the car (less than 200.000)");
-	 * int price = Console.readInt(); while(price > 200000) {
-	 * System.out.println("Wrong price. Give me a price under 200.000"); } } else if
-	 * (option == 6) { System.out.println("Give me the new doors number (3 or 5");
-	 * int numPuertas = Console.readInt();
-	 * 
-	 * while(numPuertas != 3 && numPuertas != 5) {
-	 * System.out.println("Wrong number of doors. 3 or 5"); numPuertas =
-	 * Console.readInt(); } } else if (option == 7) {
-	 * System.out.println("Give the capacity of the porter (between 100-2000)"); int
-	 * capacidadMaletero = Console.readInt();
-	 * 
-	 * while(capacidadMaletero < 100 && capacidadMaletero > 2000) {
-	 * System.out.println("Wrong capacity of the porter (between 100-2000)");
-	 * capacidadMaletero = Console.readInt(); } }
-	 * 
-	 * else { System.out.println("Bye."); }
-	 * 
-	 * System.out.println("Correct"); }
-	*/
+ 
+	public void getResultOfOperation(boolean result){
+		
+		if(result == true) {
+			System.out.println("Operation done");
+		}
+		else {
+			System.out.println("Operation not done");
+		}
+		
+	}
+	
+	public int showMenu3() {
+		System.out.println("What do you want to change? Choose an option");
+		System.out.println("Option 1: numBastidor" + 
+							"\nOption 2: colour" 
+							+ "\nOption 3: matricula."
+						+ "\nOption 4: tipoMercancia"
+						+ "\nOption 5: carga" 
+						+ "\nOption 6: numAsientos" 
+						+ "\nOption 7: precio" + "\nOption 9: Exit.");
+		int option = Console.readInt();
+		checkOption(option);
+
+		return option;
+
+	}
+	
 
 	public int choose() {
 
@@ -365,7 +424,23 @@ public class Menu {
 
 		return option;
 	} 
+	
+	public void vehicleNotExists() {
+		System.out.println("Your vehicle doesn't exists");
+	}
+	
+	public String getADate() {
+		
+		System.out.println("Give me a date in this format YYYY-MM-DD");
+		String date = Console.readString();
+		
+		return date;
+	}
 
+	public void exit() {
+		System.out.println("You choose exit. Bye");
 
-
+	}
+	
+	
 }

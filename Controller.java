@@ -5,8 +5,8 @@ public class Controller {
 	private Menu menu;
 	private Connector accessDB;
 
-	private static final int PURCHASE_CAR = 1, PURCHASE_TRUCK = 2, SALE = 3, STOCK = 4, HISTORIC = 5,
-			MODIFY_SETTINGS_CAR = 6, MODIFY_SETTINGS_TRUCK = 7, QUERY_TWODATES = 8, EXIT = 9;
+	private static final int PURCHASE_CAR = 1, PURCHASE_TRUCK = 2, SALE = 3, STOCK = 4, MODIFY_SETTINGS_CAR = 5,
+			MODIFY_SETTINGS_TRUCK = 6, QUERY_TWODATES = 7, XML = 8, EXIT = 9;
 
 	public Controller(Menu menu, Connector accessDB) {
 
@@ -27,6 +27,12 @@ public class Controller {
 				String model = menu.getModel();
 				int year = menu.getYear();
 
+				while (brand == null || model == null || year <= 0) {
+					brand = menu.getBrand();
+					model = menu.getModel();
+					year = menu.getYear();
+				}
+
 				int iDSerie = accessDB.saveSerie(brand, model, year);
 
 				Car car1 = menu.newCar();
@@ -38,17 +44,17 @@ public class Controller {
 					e.printStackTrace();
 				}
 			} else if (option == PURCHASE_TRUCK) {
-				
+
 				String brand = menu.getBrand();
 				String model = menu.getModel();
 				int year = menu.getYear();
-				
-				while(brand == null || model== null || year <= 0) {
+
+				while (brand == null || model == null || year <= 0) {
 					brand = menu.getBrand();
 					model = menu.getModel();
 					year = menu.getYear();
 				}
-				
+
 				int iDSerie = accessDB.saveSerie(brand, model, year);
 
 				Truck truck1 = menu.newTruck();
@@ -61,63 +67,83 @@ public class Controller {
 				}
 			} else if (option == SALE) {
 				int typeOfvehicle = menu.choose();
-				try {
-					accessDB.deleteVehicle(typeOfvehicle, menu.getNumOfBastidor());
-				} catch (Exception e) {
-					e.printStackTrace();
+				String number = menu.getVehicleNumOfBastidor();
+				if (accessDB.existsCar(number) == true) {
+					try {
+						accessDB.deleteVehicle(typeOfvehicle, number);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else {
+					menu.vehicleNotExists();
 				}
 
-			} else if (option == STOCK) {
-				// new Purchase().sell();
-			} else if (option == HISTORIC) {
-				// new Purchase().sell();
 			} else if (option == MODIFY_SETTINGS_CAR) {
-				/*String modification = menu.modifyCar();
-				if(accessDB.existsCar(modification) == true) {
-					menu.showCar(modification);
-				}
-				else {
-					//el coche que has introducido no existe.Agur.Opción 9
-					option = 9;
-				}*/
-				String numOfBastidor = menu.getNumOfBastidor();
-				if(accessDB.existsCar(numOfBastidor) == true) {
+
+				String numOfBastidor = menu.getVehicleNumOfBastidor();
+				if (accessDB.existsCar(numOfBastidor) == true) {
 					int attributeToChange = menu.showMenu2();
 					String newData = "";
 					int newData2 = 0;
-					
-					if(attributeToChange == 1 || attributeToChange == 2 || attributeToChange == 3) {
+
+					if (attributeToChange == 1 || attributeToChange == 2 || attributeToChange == 3) {
 						newData = menu.getStringCarModification(attributeToChange);
-						accessDB.updateCar(attributeToChange, numOfBastidor, newData);
-					}
-					else if(attributeToChange == 4 || attributeToChange == 5 || attributeToChange == 6 	|| attributeToChange == 7) {
-						
+						boolean result = accessDB.updateCar(attributeToChange, numOfBastidor, newData);
+						menu.getResultOfOperation(result);
+					} else if (attributeToChange == 4 || attributeToChange == 5 || attributeToChange == 6
+							|| attributeToChange == 7) {
+
 						newData2 = menu.getIntCarModification(attributeToChange);
-						accessDB.updateCar(attributeToChange, numOfBastidor, newData2);
-						
+						boolean result = accessDB.updateCar(attributeToChange, numOfBastidor, newData2);
+						menu.getResultOfOperation(result);
+					} else {
+						menu.exit();
 					}
-					else {
-						System.out.println("exit");
-						//esto no se puede hacer
-					}
-				}
-				else{
-					//The car doesn't exists
+				} else {
+					menu.vehicleNotExists();
 				}
 
 			} else if (option == MODIFY_SETTINGS_TRUCK) {
-				// new Purchase().sell();
+				String numOfBastidor = menu.getVehicleNumOfBastidor();
+				if (accessDB.existsTruck(numOfBastidor) == true) {
+					int attributeToChange = menu.showMenu3();
+					String newData = "";
+					int newData2 = 0;
+
+					if (attributeToChange == 1 || attributeToChange == 2 || attributeToChange == 3
+							|| attributeToChange == 4) {
+						newData = menu.getStringTruckModification(attributeToChange);
+						boolean result = accessDB.updateTruck(attributeToChange, numOfBastidor, newData);
+						menu.getResultOfOperation(result);
+					} else if (attributeToChange == 5 || attributeToChange == 6 || attributeToChange == 7) {
+
+						newData2 = menu.getIntCarModification(attributeToChange);
+						boolean result = accessDB.updateTruck(attributeToChange, numOfBastidor, newData2);
+						menu.getResultOfOperation(result);
+					} else {
+						menu.exit();
+					}
+				} else {
+					menu.vehicleNotExists();
+				}
 			}
 
 			else if (option == QUERY_TWODATES) {
-				// new Purchase().sell();
+				String date1 = menu.getADate();
+				String date2 = menu.getADate();
+				int result = menu.choose();
+				accessDB.queryTwoDates(result, date1, date2);
+
 			} else {
-				System.out.println("Bye.");
+				menu.exit();
 			}
 			option = Console.readInt();
 
 		} while (option >= PURCHASE_CAR && option <= MODIFY_SETTINGS_TRUCK);
 
+		if (option == EXIT) {
+
+		}
 	}
 
 }
