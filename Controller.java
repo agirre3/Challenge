@@ -39,7 +39,13 @@ public class Controller {
 				car1.setSerie(iDSerie);
 
 				try {
-					accessDB.saveCar(car1);
+					boolean result = accessDB.saveCar(car1);
+					if(result == true) {
+						menu.operationDone();
+					}
+					else {
+						menu.operationNotDone();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -61,7 +67,13 @@ public class Controller {
 				truck1.setSerie(iDSerie);
 
 				try {
-					accessDB.saveTruck(truck1);
+					boolean result = accessDB.saveTruck(truck1);
+					if(result == true) {
+						menu.operationDone();
+					}
+					else {
+						menu.operationNotDone();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,7 +83,14 @@ public class Controller {
 				if (typeOfvehicle == 1) {
 					if (accessDB.existsCar(number) == true) {
 						try {
-							accessDB.deleteVehicle(typeOfvehicle, number);
+							boolean result = accessDB.deleteVehicle(typeOfvehicle, number);
+							if(result == true) {
+								menu.operationDone();
+							}
+							else {
+								menu.operationNotDone();
+							}
+						
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

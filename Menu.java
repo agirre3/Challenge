@@ -327,7 +327,7 @@ public class Menu {
 		else{
 			System.out.println("Give the type of merchandise (one character: G, A or P)");
 			char tipoMercancia = Console.readChar();
-			while (tipoMercancia != 'G' && tipoMercancia != 'g' && tipoMercancia != 'A' && tipoMercancia != 'A'
+			while (tipoMercancia != 'G' && tipoMercancia != 'g' && tipoMercancia != 'A' && tipoMercancia != 'a'
 					&& tipoMercancia != 'p' && tipoMercancia != 'P') {
 				System.out.println("Wrong type of merchandise (one character: G, A or P)");
 				tipoMercancia = Console.readChar();
@@ -350,11 +350,11 @@ public class Menu {
 			return carga;
 		}
 		else if(attributeToChange == 6) {
-			System.out.println("Give me seat number (between 4 and 9)");
+			System.out.println("Give me seat number (2 or 3)");
 			int numAsientos = Console.readInt();
 			
-			while (numAsientos < 4 || numAsientos > 9) {
-				System.out.println("Wrong number of seats. (between 4 and 9)");
+			while (numAsientos !=2 && numAsientos !=3) {
+				System.out.println("Wrong number of seats. (2 or 3)");
 				numAsientos = Console.readInt();
 			}	
 			return numAsientos;
@@ -436,6 +436,16 @@ public class Menu {
 		String date = Console.readString();
 		
 		return date;
+	}
+	
+	public void operationDone() {
+		
+		System.out.println("The operation is done");
+	}
+	
+	public void operationNotDone() {
+		
+		System.out.println("ERROR: The operation is not done. Repeat the operation");
 	}
 
 	public void exit() {

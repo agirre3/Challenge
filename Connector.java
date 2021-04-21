@@ -16,8 +16,8 @@ public class Connector {
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	private static final String user = "team4";
 	private static final String password = "team4";
-	private static final String url = "jdbc:mysql://127.0.0.1/concesionario";
-			//"jdbc:mysql://10.14.1.15:3306/concesionario";
+	private static final String url = "jdbc:mysql://10.14.1.15:3306/concesionario";
+			//"jdbc:mysql://127.0.0.1/concesionario";
 
 	public Connector() {
 
@@ -217,11 +217,8 @@ public class Connector {
 				stmt.setInt(7, car1.getPrecio());
 				stmt.setInt(8, car1.getSerie());
 
-				int value = stmt.executeUpdate();
+				stmt.executeUpdate();
 
-				// quitarlo una vez probado
-				if (value > 0)
-					System.out.println("Operation done");
 				return true;
 			}
 
@@ -229,7 +226,7 @@ public class Connector {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("Operation not done");
+		
 
 		return false;
 	}
@@ -280,24 +277,22 @@ public class Connector {
 
 					int value = stmt.executeUpdate();
 
-					// quitarlo una vez probado
-					if (value > 0)
-						System.out.println("Operation done");
-					return true;
+					if(value > 0) {
+						return true;
+					}
+					
 				}
 
 				catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Operation not done");
-
 			return false;
 		}
 
 	
 
-	public void deleteVehicle(int typeOfvehicle, String numBastidor) {
+	public boolean deleteVehicle(int typeOfvehicle, String numBastidor) {
 		
 		String deleteVehicle = "";
 
@@ -314,17 +309,15 @@ public class Connector {
 			stmt.setString(1, numBastidor);
 			int value = stmt.executeUpdate();
 
-			// quitarlo una vez probado
 			if (value > 0)
-				System.out.println("Operation done");
-			else {
-				System.out.println("Error: Operation not done");
-			}
+				return true;
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
+		return false;
 	}
 
 	public boolean updateCar(int option, String numOfbastidor, String newValue) {
@@ -609,9 +602,10 @@ public class Connector {
 			
 			while(column <= numberOfColumns) {
 				String name = rsmd.getColumnName(column);
-				System.out.print(name + "  ");
+				System.out.print(name + "\t");
 				column++;
 			}
+			
 			System.out.println("");
 			while(rs.next()) {
 				String vehicleType = rs.getString(1);
@@ -628,13 +622,13 @@ public class Connector {
 				int capacidadMaletero = rs.getInt(12);
 				int precio = rs.getInt(13);
 				int idSerie = rs.getInt(14);
-				String repainted = rs.getString(15);
+				String repintado = rs.getString(15);
 				
 	
-					System.out.println(vehicleType + "\t\t" + date + "\t"+ time  + "\t"+ accion + "\t"
-					+ numBastidor + "\t"+  matricula + "\t"+  colour + "\t"+ carga + "\t" + tipoMercancia + "\t" 
-					+ numPuertas + "\t"+  capacidadMaletero + "\t"+  numAsientos + "\t"+  precio + "\t"
-					+ idSerie + "\t"+ repainted);
+					System.out.println(vehicleType + "\t" + date + "  " + time  + "\t"+ accion + "  "
+					+ numBastidor + "  "+  matricula + "\t"+  colour + "\t"+ carga + "\t" + tipoMercancia + "\t\t"
+					+  numAsientos + "\t\t" + numPuertas + "\t\t"+  capacidadMaletero + "\t\t\t"+  precio + "\t"
+					+ idSerie + "\t" + repintado);
 			}
 			
 		} catch (SQLException e) {
@@ -645,14 +639,14 @@ public class Connector {
 	
 	public void showStock() {
 		String query = "";
-		ResultSet rs;
+		
 		ResultSetMetaData rsmd;
 		
-			query = "SELECT * FROM STOCK, SERIE where stock.idSerie = serie.idSerie";
-		
+			query = "SELECT * FROM CAR, SERIE where car.idSerie = serie.idSerie";
+	
 		
 		try(PreparedStatement stmt = conn.prepareStatement(query)){
-			rs = stmt.executeQuery();
+			ResultSet rs = stmt.executeQuery();
 			
 			rsmd = rs.getMetaData();
 			int numberOfColumns = rsmd.getColumnCount();
@@ -660,38 +654,78 @@ public class Connector {
 			
 			while(column <= numberOfColumns) {
 				String name = rsmd.getColumnName(column);
-				System.out.print(name + "  ");
+				System.out.print(name + "\t");
 				column++;
 			}
-			System.out.println("");
+			System.out.println("CARS");
 			while(rs.next()) {
-				String vehicleType = rs.getString(1);
-				String numBastidor = rs.getString(2);
-				String matricula = rs.getString(3);
-				String colour = rs.getString(4);
-				int carga = rs.getInt(5);
-				String tipoMercancia = rs.getString(6);
-				int numAsientos = rs.getInt(7);
-				int numPuertas = rs.getInt(8);
-				int capacidadMaletero = rs.getInt(9);
-				int precio = rs.getInt(10);
-				int idSerie = rs.getInt(11);
-				String repainted = rs.getString(12);
-				int idSerie2 = rs.getInt(13);
-				String brand = rs.getString(14);
-				String model = rs.getString(15);
-				int year = rs.getInt(16);
+
+				String numBastidor = rs.getString(1);
+				String matricula = rs.getString(2);
+				String colour = rs.getString(3);
+				int numAsientos = rs.getInt(4);
+				int numPuertas = rs.getInt(5);
+				int capacidadMaletero = rs.getInt(6);
+				int precio = rs.getInt(7);
+				int idSerie = rs.getInt(8);
+				int idSerie2 = rs.getInt(9);
+				String brand = rs.getString(10);
+				String model = rs.getString(11);
+				int year = rs.getInt(12);
 				
 				
-					System.out.println(vehicleType + "\t" + numBastidor + " " +  matricula + "    "+ 
-					colour + "\t" + carga + "\t" + tipoMercancia + "\t\t" + numAsientos + "\t\t" + numPuertas + "\t"+  capacidadMaletero
-					+ "\t\t" +  precio + "\t" + idSerie + "\t\t"+ repainted + "\t"+ idSerie2 + "\t" + brand + "\t" + model + "\t" + year);
+					System.out.println(numBastidor + " " +  matricula + "\t" + colour + "\t\t" + numAsientos 
+					+ "\t\t"+ numPuertas + "\t\t" + capacidadMaletero  + "\t\t" +  precio + "\t" + idSerie + "\t"+ idSerie2 
+					+ "\t" + brand + "\t" + model + "\t" + year);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
+		
+		query = "SELECT * FROM TRUCK, SERIE where truck.idSerie = serie.idSerie";
+		
+		String st = "";
+		try(PreparedStatement stmt = conn.prepareStatement(query)){
+			ResultSet rs = stmt.executeQuery();
+			
+			rsmd = rs.getMetaData();
+			int numberOfColumns = rsmd.getColumnCount();
+			int column = 1;
+			
+			while(column <= numberOfColumns) {
+				String name = rsmd.getColumnName(column);
+				System.out.print(name + "\t");
+				column++;
+			}
+			System.out.println("\t\tTRUCKS");
+			while(rs.next()) {
+				
+				String numBastidor = rs.getString(2);
+				String matricula = rs.getString(3);
+				String colour = rs.getString(4);
+				int carga = rs.getInt(5);
+				String tipoMercancia = rs.getString(6);
+				int numAsientos = rs.getInt(7);
+				int precio = rs.getInt(10);
+				int idSerie = rs.getInt(11);
+				int idSerie2 = rs.getInt(13);
+				String brand = rs.getString(14);
+				String model = rs.getString(15);
+				int year = rs.getInt(16);
+				
+				
+					System.out.println(numBastidor + " " +  matricula + "\t" + colour + "\t" + carga +
+					"\t" + tipoMercancia + "\t\t" + numAsientos + "\t\t" +  precio + "\t" + idSerie 
+					+ "\t\t" + idSerie2 + "\t" + brand + "\t" + model + "\t" + year);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
 	}
 	
 }
