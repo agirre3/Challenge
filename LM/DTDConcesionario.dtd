@@ -1,0 +1,23 @@
+<!ELEMENT vehicles (car*, truck*)>
+      <!ELEMENT car (numBastidor, matricula, colour, numAsientos, precio, numPuertas, capacidadMaletero, serie)>
+      <!ELEMENT numBastidor EMPTY>
+      <!ATTLIST numBastidor numero CDATA #REQUIRED>
+      <!ELEMENT matricula EMPTY>
+      <!ATTLIST matricula numero CDATA #REQUIRED>
+      <!ELEMENT colour EMPTY>
+      <!ATTLIST colour tipo CDATA #REQUIRED>
+      <!ELEMENT numAsientos EMPTY>
+      <!ATTLIST numAsientos cantidad CDATA #REQUIRED>
+      <!ELEMENT precio EMPTY>
+      <!ATTLIST precio total CDATA #REQUIRED>
+      <!ELEMENT numPuertas EMPTY>
+      <!ATTLIST numPuertas cantidad CDATA #REQUIRED>
+      <!ELEMENT capacidadMaletero EMPTY>
+      <!ATTLIST capacidadMaletero  cantidad CDATA #REQUIRED>
+      <!ELEMENT serie EMPTY>
+      <!ATTLIST serie numero CDATA #REQUIRED>
+      <!ELEMENT truck (numBastidor, matricula, colour, numAsientos, precio, carga, tipoMercancia, serie)>
+      <!ELEMENT carga EMPTY>
+      <!ATTLIST carga cantidad CDATA #REQUIRED>
+      <!ELEMENT tipoMercancia EMPTY>
+      <!ATTLIST tipoMercancia tipo CDATA #REQUIRED>

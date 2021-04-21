@@ -1,26 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE vehicles SYSTEM "DTDConcesionario.dtd">
 <vehicles>
 <car>
-	<numBastidor></numBastidor>
-	<matricula></matricula>
-	<color></color>
-	<numAsientos></numAsientos>
-	<precio></precio>
-	<numPuertas></numPuertas>
-	<capacidadMaletero></capacidadMaletero>
-	<serie></serie>
-
+	<numBastidor numero="bastidor"></numBastidor>
+	<matricula numero="matricula"></matricula>
+	<colour tipo="color"></colour>
+	<numAsientos cantidad="asientos"></numAsientos>
+	<precio total="precio"></precio>
+	<numPuertas cantidad="puertas"></numPuertas>
+	<capacidadMaletero cantidad="capacidad"></capacidadMaletero>
+	<serie numero="serie"></serie>
 </car>
-
 <truck>
-	<numBastidor></numBastidor>
-	<matricula></matricula>
-	<color></color>
-	<numAsientos></numAsientos>
-	<precio></precio>
-	<carga></carga>
-	<tipoMercancía></tipoMercancía>
-	<serie></serie>
-
+	<numBastidor numero="bastidor"></numBastidor>
+	<matricula numero="matricula"></matricula>
+	<colour tipo="color"></colour>
+	<numAsientos cantidad="asientos"></numAsientos>
+	<precio total="precio"></precio>
+	<carga cantidad="carga"></carga>
+	<tipoMercancia tipo="mercancia"></tipoMercancia>
+	<serie numero="serie"></serie>
 </truck>
 </vehicles>
