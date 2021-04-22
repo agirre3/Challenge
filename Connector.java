@@ -1,12 +1,12 @@
 package G4Challenge;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import com.mysql.cj.jdbc.Driver;
 
 
 
@@ -731,6 +731,62 @@ public class Connector {
 		
 	}
 	
+	public ResultSet getSerieData() {
+		
+		String query = "select * from serie";
+		
+		ResultSet rs;
+		
+		try (PreparedStatement stmt = conn.prepareStatement(query)){
+			rs = stmt.executeQuery();
+			
+			return rs;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	
+	public ResultSet getCarData() {
+		
+		String query = "select * from car";
+		
+		ResultSet rs;
+		
+		try (PreparedStatement stmt = conn.prepareStatement(query)){
+			rs = stmt.executeQuery();
+			
+			return rs;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+
+	public ResultSet getTruckData() {
+	
+		String query = "select * from truck";
+		
+		ResultSet rs;
+		
+		try (PreparedStatement stmt = conn.prepareStatement(query)){
+			rs = stmt.executeQuery();
+			
+			return rs;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
 }
 
 

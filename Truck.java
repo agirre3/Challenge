@@ -7,10 +7,10 @@ public class Truck extends Vehicle{
 	private int carga;
 	private char tipoMercancia;
 	
-	public Truck(String numBastidor, String matricula, String colour,int numAsientos, int precio, int serie, int carga, char tipoMercacia) {
+	public Truck(String numBastidor, String matricula, String colour,int numAsientos, int precio, int serie, int carga, char tipoMercancia) {
 		super(numBastidor, matricula, colour, numAsientos, precio, serie);
 		this.carga = carga;
-		this.tipoMercancia = tipoMercacia;
+		this.tipoMercancia = tipoMercancia;
 	}
 
 	public String getNumBastidor() {
