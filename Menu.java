@@ -47,7 +47,7 @@ public class Menu {
 
 		System.out.println("Give me the year of fabrication. 4 characters, please");
 		int year = Console.readInt();
-		while (year > 2021 && year < 1990) {
+		while (year > 2021 || year < 1990) {
 			System.out.println("Wrong year. Please, give me the 4 characters of the year");
 			year = Console.readInt();
 		}
@@ -100,18 +100,18 @@ public class Menu {
 
 		System.out.println("Give me the number of bastidor. 17 characters");
 		String numBastidor = Console.readString();
-		/*while (numBastidor.length() < 17 || numBastidor.length() > 17) {
+		while (numBastidor.length() < 17 || numBastidor.length() > 17) {
 			System.out.println("Wrong number of bastidor. 17 characters");
 			numBastidor = Console.readString();
-		}*/
+		}
 
 		System.out.println("Give me the license plate. 7 characters maximum");
 		String matricula = Console.readString().toUpperCase();
 
-		/*while (matricula.length() < 7 || matricula.length() > 7) {
+		while (matricula.length() < 7 || matricula.length() > 7) {
 			System.out.println("Wrong number of license plate. 7 characters");
 			matricula = Console.readString().toUpperCase();
-		}*/
+		}
 
 		
 		Car car = new Car(numBastidor, colour, matricula, numAsientos, price, -1, numPuertas, capacidadMaletero);
@@ -376,10 +376,10 @@ public class Menu {
 	public String getVehicleNumOfBastidor() {
 		System.out.println("What vehicle do you want to change/delete? Give me the numBastidor");
 		String numBastidor = Console.readString();
-		/*while (numBastidor.length() < 17 || numBastidor.length() > 17) {
+		while (numBastidor.length() < 17 || numBastidor.length() > 17) {
 			System.out.println("Wrong number of bastidor. 17 characters");
 			numBastidor = Console.readString();
-		}*/
+		}
 		return numBastidor;
 	}
 	

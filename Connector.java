@@ -654,7 +654,9 @@ public class Connector {
 			
 			while(column <= numberOfColumns) {
 				String name = rsmd.getColumnName(column);
-				System.out.print(name + "\t");
+				if(column != 9) {
+					System.out.print(name + "\t");
+				}
 				column++;
 			}
 			System.out.println("CARS");
@@ -662,21 +664,20 @@ public class Connector {
 
 				String numBastidor = rs.getString(1);
 				String matricula = rs.getString(2);
-				String colour = rs.getString(3);
-				int numAsientos = rs.getInt(4);
-				int numPuertas = rs.getInt(5);
-				int capacidadMaletero = rs.getInt(6);
+				String colour = rs.getString(3);	
+				int numPuertas = rs.getInt(4);
+				int capacidadMaletero = rs.getInt(5);
+				int numAsientos = rs.getInt(6);	
 				int precio = rs.getInt(7);
 				int idSerie = rs.getInt(8);
-				int idSerie2 = rs.getInt(9);
 				String brand = rs.getString(10);
 				String model = rs.getString(11);
 				int year = rs.getInt(12);
 				
 				
-					System.out.println(numBastidor + " " +  matricula + "\t" + colour + "\t\t" + numAsientos 
-					+ "\t\t"+ numPuertas + "\t\t" + capacidadMaletero  + "\t\t" +  precio + "\t" + idSerie + "\t"+ idSerie2 
-					+ "\t" + brand + "\t" + model + "\t" + year);
+					System.out.println(numBastidor + " " +  matricula + "\t" + colour + "\t\t" + numPuertas + "\t\t"
+					+ capacidadMaletero + "\t\t" + numAsientos  + "\t\t" +  precio + "\t" + idSerie + "\t"
+					+ brand + "\t" + model + "\t" + year);
 			}
 			
 		} catch (SQLException e) {
@@ -696,29 +697,31 @@ public class Connector {
 			
 			while(column <= numberOfColumns) {
 				String name = rsmd.getColumnName(column);
-				System.out.print(name + "\t");
+				if(column != 9) {
+					System.out.print(name + "\t");
+				}
+				
 				column++;
 			}
 			System.out.println("\t\tTRUCKS");
 			while(rs.next()) {
 				
-				String numBastidor = rs.getString(2);
-				String matricula = rs.getString(3);
-				String colour = rs.getString(4);
-				int carga = rs.getInt(5);
-				String tipoMercancia = rs.getString(6);
-				int numAsientos = rs.getInt(7);
-				int precio = rs.getInt(10);
-				int idSerie = rs.getInt(11);
-				int idSerie2 = rs.getInt(13);
-				String brand = rs.getString(14);
-				String model = rs.getString(15);
-				int year = rs.getInt(16);
+				String numBastidor = rs.getString(1);
+				String matricula = rs.getString(2);
+				String colour = rs.getString(3);
+				int carga = rs.getInt(4);
+				String tipoMercancia = rs.getString(5);
+				int numAsientos = rs.getInt(6);
+				int precio = rs.getInt(7);
+				int idSerie = rs.getInt(8);
+				String brand = rs.getString(10);
+				String model = rs.getString(11);
+				int year = rs.getInt(12);
 				
 				
-					System.out.println(numBastidor + " " +  matricula + "\t" + colour + "\t" + carga +
+					System.out.println(numBastidor + "\t" +  matricula + "\t" + colour + "\t" + carga +
 					"\t" + tipoMercancia + "\t\t" + numAsientos + "\t\t" +  precio + "\t" + idSerie 
-					+ "\t\t" + idSerie2 + "\t" + brand + "\t" + model + "\t" + year);
+					+ "\t" + brand + "\t" + model + "\t" + year);
 			}
 			
 		} catch (SQLException e) {
