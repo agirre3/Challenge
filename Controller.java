@@ -1,8 +1,6 @@
 package G4Challenge;
 
-import XML.XMLExport;
-import XML.XMLImport;
-
+/*This class is used to built all the classes in one and their methods also and manage the application*/ 
 
 public class Controller {
 
@@ -27,8 +25,9 @@ public class Controller {
 	public void run() {
 
 		int option = 0;
-		menu.showMenu();
+		
 		do {
+			menu.showMenu();
 			option = menu.recogerUserOption();
 			if (option == PURCHASE_CAR) {
 
@@ -182,6 +181,8 @@ public class Controller {
 					importer.importation(ubication);
 				}
 			}
+			
+			menu.showMenu();
 			option = Console.readInt();
 
 		} while (option != EXIT);

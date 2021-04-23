@@ -1,13 +1,13 @@
 package G4Challenge;
 
 
-//import java.util.HashMap;
+/*A class to make objects of type Car*/
 
 public class Car extends Vehicle{
 	
 	private int numPuertas;
 	private int capacidadMaletero;
-	//private HashMap<String, Vehicle> serieListCar = new HashMap<String, Vehicle>();
+	
 
 	public Car(String numBastidor, String matricula, String colour,int numAsientos, int precio, int serie, int numPuertas, int capacidadMaletero) {
 		super(numBastidor, colour, matricula, numAsientos, precio, serie);

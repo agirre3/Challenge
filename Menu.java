@@ -1,5 +1,6 @@
 package G4Challenge;
 
+/*This class is used for interact with the user*/
 
 public class Menu {
 

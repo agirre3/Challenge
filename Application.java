@@ -1,7 +1,6 @@
 package G4Challenge;
 
-import XML.XMLExport;
-import XML.XMLImport;
+/*This class is used to run the application*/
 
 public class Application {
 

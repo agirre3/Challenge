@@ -1,6 +1,6 @@
 package G4Challenge;
 
-
+/*A class to make objects of type Truck*/
 
 public class Truck extends Vehicle{
 	

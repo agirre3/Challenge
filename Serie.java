@@ -1,6 +1,6 @@
 package G4Challenge;
 
-
+/*A class to built series for cars and trucks*/
 
 public class Serie {
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.jdom2.Element;
 
+/*This class is used to connect with the database and work with it*/
 
 public class Connector {
 

@@ -1,5 +1,7 @@
 package G4Challenge;
 
+/*The father of the two types of object that we have: trucks and cars*/
+
 public abstract class Vehicle {
 
 	private int numAsientos, precio;
