@@ -1,13 +1,15 @@
 package G4Challenge;
 
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.jdom2.Element;
 
 
 public class Connector {
@@ -18,6 +20,8 @@ public class Connector {
 	private static final String password = "team4";
 	private static final String url = "jdbc:mysql://10.14.1.15:3306/concesionario";
 			//"jdbc:mysql://127.0.0.1/concesionario";
+	
+	//
 
 	public Connector() {
 
@@ -590,7 +594,6 @@ public class Connector {
 		
 			query = "SELECT * FROM HISTORIC WHERE FECHA BETWEEN ? AND ? and accion = 'SELL'";
 		
-		
 		try(PreparedStatement stmt = conn.prepareStatement(query)){
 			stmt.setString(1, date1);
 			stmt.setString(2, date2);
@@ -605,7 +608,6 @@ public class Connector {
 				System.out.print(name + "\t");
 				column++;
 			}
-			
 			System.out.println("");
 			while(rs.next()) {
 				String vehicleType = rs.getString(1);
@@ -731,35 +733,51 @@ public class Connector {
 		
 	}
 	
-	public ResultSet getSerieData() {
+	public List<Serie> getSerieData() {
 		
 		String query = "select * from serie";
 		
 		ResultSet rs;
 		
-		try (PreparedStatement stmt = conn.prepareStatement(query)){
+		List<Serie> series = new ArrayList<Serie>();
+		
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
 			
-			return rs;
+			
+			while (rs.next()) {
+				Serie s = new Serie(rs.getString(2), rs.getString(3), Integer.parseInt(rs.getString(4)));
+				series.add(s);
+			}
+			
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 		}
-		return null;
+		return series;
 	}
 	
-	public ResultSet getCarData() {
+	public List<Car> getCarData() {
 		
 		String query = "select * from car";
+		List<Car> cars = new ArrayList<Car>();
 		
 		ResultSet rs;
 		
-		try (PreparedStatement stmt = conn.prepareStatement(query)){
+		try{
+			PreparedStatement stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
 			
-			return rs;
+
+			while (rs.next()) {
+				Car c1 = new Car(rs.getString(1), rs.getString(2), rs.getString(3),Integer.parseInt(rs.getString(4)), 
+						Integer.parseInt(rs.getString(5)), Integer.parseInt(rs.getString(6)),Integer.parseInt(rs.getString(7)),
+						Integer.parseInt(rs.getString(7)));
+				cars.add(c1);
+			}
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -769,16 +787,26 @@ public class Connector {
 		return null;
 	}
 
-	public ResultSet getTruckData() {
+	public List<Truck> getTruckData() {
 	
 		String query = "select * from truck";
+		List<Truck> trucks = new ArrayList<Truck>();
 		
 		ResultSet rs;
 		
-		try (PreparedStatement stmt = conn.prepareStatement(query)){
+		try{
+			PreparedStatement stmt = conn.prepareStatement(query);
 			rs = stmt.executeQuery();
 			
-			return rs;
+			String s = rs.getString(8);
+			while (rs.next()) {
+				Truck t1 = new Truck(rs.getString(1), rs.getString(2), rs.getString(3),Integer.parseInt(rs.getString(4)), 
+						Integer.parseInt(rs.getString(5)), Integer.parseInt(rs.getString(6)),Integer.parseInt(rs.getString(7)),
+						s.charAt(0));
+				trucks.add(t1);
+			}
+			
+			return trucks;
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -787,6 +815,7 @@ public class Connector {
 		}
 		return null;
 	}
+	
 }
 
 

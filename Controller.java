@@ -1,25 +1,34 @@
 package G4Challenge;
 
+import XML.XMLExport;
+import XML.XMLImport;
+
+
 public class Controller {
 
 	private Menu menu;
 	private Connector accessDB;
+	
+	private XMLExport exporter;
+	private XMLImport importer;
 
 	private static final int PURCHASE_CAR = 1, PURCHASE_TRUCK = 2, SALE = 3, STOCK = 4, MODIFY_SETTINGS_CAR = 5,
-			MODIFY_SETTINGS_TRUCK = 6, QUERY_TWODATES = 7, XML = 8;
+			MODIFY_SETTINGS_TRUCK = 6, QUERY_TWODATES = 7, XML = 8, EXIT = 9;
 
-	public Controller(Menu menu, Connector accessDB) {
+	public Controller(Menu menu, Connector accessDB, XMLExport exporter, XMLImport importer) {
 
 		this.menu = menu;
 		this.accessDB = accessDB;
+		this.exporter = exporter;
+		this.importer = importer;
 
 	}
 
 	public void run() {
 
 		int option = 0;
+		menu.showMenu();
 		do {
-			menu.showMenu();
 			option = menu.recogerUserOption();
 			if (option == PURCHASE_CAR) {
 
@@ -158,20 +167,25 @@ public class Controller {
 				} else {
 					menu.vehicleNotExists();
 				}
-			}
-
-			else if (option == QUERY_TWODATES) {
+			} else if (option == QUERY_TWODATES) {
 				String date1 = menu.getADate();
 				String date2 = menu.getADate();
 				accessDB.queryTwoDates(date1, date2);
 
-			} else {
-				menu.exit();
+			} else if (option == XML) {
+				int result = menu.chooseXML();
+				if(result == 1) {
+					exporter.exportation();
+				}
+				else {
+					String ubication = menu.getUbicationFile();
+					importer.importation(ubication);
+				}
 			}
 			option = Console.readInt();
 
-		} while (option >= PURCHASE_CAR && option <= MODIFY_SETTINGS_TRUCK);
-
+		} while (option != EXIT);
+		menu.exit();
 	}
 
 }

@@ -1,23 +1,21 @@
 package G4Challenge;
 
-import java.sql.Date;
 
 public class Menu {
 
 	public void showMenu() {
 		System.out.println("Option 1: Buy a car." + "\nOption 2: Buy a truck." + "\nOption 3: Sell a car/truck."
 				+ "\nOption 4: Show on the screen the stock" + "\nOption 5: Modify setting of a car" + "\nOption 6: Modify setting of a truck"
-				+ "\nOption 7: Show on screen the sales between two dates" + "\nOption 8: Exit.");
+				+ "\nOption 7: Show on screen the sales between two dates" + "\nOption 8: XML" + "\nOption 9:Exit.");
 
 	}
 
 	private void checkOption(int option) {
-		while (option < 1 && option > 8) {
+		while (option < 1 && option > 9) {
 			System.out.println("Incorrect option.");
 			System.out.println("Option 1: Buy a car." + "\nOption 2: Buy a truck." + "\nOption 3: Sell a car/truck."
-					+ "\nOption 4: Show on the screen the stock" + "\nOption 5: Show on the screen the historic"
-					+ "\nOption 6: Modify setting of a car" + "\nOption 7: Modify setting of a truck"
-					+ "\nOption 8: Query between two dates" + "\nOption 9: Exit.");
+					+ "\nOption 4: Show on the screen the stock" + "\nOption 5: Modify setting of a car" + "\nOption 6: Modify setting of a truck"
+					+ "\nOption 7: Show on screen the sales between two dates" + "\nOption 8: XML" + "\nOption 9:Exit.");
 			option = Console.readInt();
 		}
 	}
@@ -438,6 +436,17 @@ public class Menu {
 		return date;
 	}
 	
+	public int chooseXML() {
+		
+		System.out.println("You have chosen XML option. Do you want to export (option 1) or import(option 2)?");
+		int option = Console.readInt();
+		while(option != 1 && option != 2) {
+			System.out.println("Wrong option. Export XML --> 1, Import XML --> 2");
+			option = Console.readInt();
+		}
+		return option;
+		
+	}
 	public void operationDone() {
 		
 		System.out.println("The operation is done");
@@ -453,5 +462,10 @@ public class Menu {
 
 	}
 	
+	public String getUbicationFile() {
+		System.out.println("Give me file's ubication");
+		String ubication = Console.readString();
+		return ubication;
+	}
 	
 }

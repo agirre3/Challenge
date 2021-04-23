@@ -17,6 +17,36 @@ public class Serie {
 	}
 	
 	
+	
+	
+	public String getMarca() {
+		return marca;
+	}
+
+
+
+
+	public String getModelo() {
+		return modelo;
+	}
+
+
+
+
+	public int getAnio_fabricacion() {
+		return anio_fabricacion;
+	}
+
+
+
+
+	public String[] getSerieType() {
+		return serieType;
+	}
+
+
+
+
 	public String toString() {
 		return "\nBrand: " + marca + "\nModel: " + modelo + "\nFabrication Year: " + anio_fabricacion;
 	}
